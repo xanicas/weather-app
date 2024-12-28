@@ -1,0 +1,14 @@
+@use "@/assets/styles/variables" as *;
+@use "./views/home";
+@use "./components/header";
+@use "./components/weatherform";
+@use "./components/weatherdisplay";
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: $font-stack;
+}
