@@ -18,7 +18,6 @@ export const fetchWeather = async (cityOrCoordinates) => {
         }
 
         const response = await axios.get(`${API_URL}/weather`, { params });
-        console.log('weather -- ', response.data);
         return response.data;
     } catch (error) {
         console.error('Error fetching weather data:', error);

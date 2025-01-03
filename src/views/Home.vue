@@ -1,71 +1,47 @@
 <template>
     <div class="home-wrapper">
-        <WeatherForm @city-submitted="fetchWeather" />
-        <WeatherDisplay :weather="weatherData" />
+        <div class="left-panel">
+            <CurrentWeatherDisplay />
+        </div>
+        <div class="right-panel">
+            <WeatherForm @city-submitted="fetchWeather" />
+            <WeatherDisplay :weather="weatherData" />
+        </div>
     </div>
 </template>
 
 <script>
-import { fetchWeather } from "../services/api";
-import WeatherForm from "../components/WeatherForm.vue";
-import WeatherDisplay from "../components/WeatherDisplay.vue";
+import { fetchWeather } from "@/services/api";
+import WeatherForm from "@/components/WeatherForm.vue";
+import WeatherDisplay from "@/components/WeatherDisplay.vue";
+import CurrentWeatherDisplay from "@/components/CurrentWeatherDisplay.vue";
 
 export default {
     name: "HomePage",
     components: {
         WeatherForm,
         WeatherDisplay,
+        CurrentWeatherDisplay,
     },
     data() {
         return {
             weatherData: null,
-            errorMessage: '',
+            loading: false,
         };
-    },
-    mounted() {
-        this.getLocationWeather();
     },
     methods: {
         async fetchWeather(city) {
+            this.loading = true;
             try {
-                this.weatherData = await fetchWeather(city);
+                const weather = await fetchWeather(city);
+                this.weatherData = weather;
             } catch (error) {
                 console.error(error.message);
                 alert("Unable to fetch weather data. Please try again.");
+            } finally {
+                this.loading = false;
             }
-        },
-        async getLocationWeather() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    async (position) => {
-                        try {
-                            const { latitude, longitude } = position.coords;
-                            this.weatherData = await fetchWeather({ lat: latitude, lon: longitude });
-                        } catch (error) {
-                            this.errorMessage = "Unable to fetch weather data for your location.";
-                        }
-                    },
-                    (error) => {
-                        switch (error.code) {
-                            case error.PERMISSION_DENIED:
-                                this.errorMessage = "User denied the request for Geolocation.";
-                                break;
-                            case error.POSITION_UNAVAILABLE:
-                                this.errorMessage = "Location information is unavailable.";
-                                break;
-                            case error.TIMEOUT:
-                                this.errorMessage = "The request to get user location timed out.";
-                                break;
-                            default:
-                                this.errorMessage = "An unknown error occurred.";
-                                break;
-                        }
-                    }
-                );
-            } else {
-                this.errorMessage = "Geolocation is not supported by this browser.";
-            }
-        },
-    }
+        }
+    },
 };
 </script>

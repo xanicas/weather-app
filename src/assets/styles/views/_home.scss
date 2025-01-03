@@ -1,5 +1,17 @@
 @use "@/assets/styles/variables" as *;
 
 .home-wrapper {
-    text-align: center;
+    display: flex;
+    height: 100vh;
+
+    .left-panel {
+        width: 30%;
+        padding: $spacing-12;
+        background: $background-color-1;
+    }
+
+    .right-panel {
+        width: 70%;
+        padding: $spacing-12;
+    }
 }

@@ -1,0 +1,9 @@
+@use "@/assets/styles/variables" as *;
+
+.about-wrapper {
+    padding: $spacing-16;
+
+    p {
+        margin-top: $spacing-8;
+    }
+}

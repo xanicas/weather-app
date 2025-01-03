@@ -3,6 +3,12 @@ const webpack = require('webpack');
 
 module.exports = defineConfig({
     transpileDependencies: true,
+    chainWebpack: config => {
+        config.plugin('html').tap(args => {
+            args[0].title = 'Weather App';
+            return args;
+        });
+    },
     configureWebpack: {
         plugins: [
             new webpack.DefinePlugin({
