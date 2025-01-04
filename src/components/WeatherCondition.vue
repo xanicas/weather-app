@@ -1,5 +1,5 @@
 <template>
-    <div class="weather-card">
+    <div v-if="weather && weather.weather" class="weather-card">
         <img :src="`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`" alt="Weather Icon"
             class="weather-icon" />
         <div class="weather-details">

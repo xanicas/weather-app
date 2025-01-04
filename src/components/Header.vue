@@ -21,9 +21,9 @@ export default {
         const router = useRouter();
         const route = useRoute();
 
-        const backHomePage = () => {
+        const backHomePage = async () => {
             if (route.path !== '/') {
-                router.push({ name: 'Home' });
+                await router.push({ name: 'HomePage' });
             }
         };
 

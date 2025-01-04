@@ -25,7 +25,7 @@ export default {
     },
     data() {
         return {
-            weatherData: null,
+            weatherData: {},
             loading: false,
         };
     },
@@ -37,7 +37,7 @@ export default {
                 this.weatherData = weather;
             } catch (error) {
                 console.error(error.message);
-                alert("Unable to fetch weather data. Please try again.");
+                this.weatherData = null;
             } finally {
                 this.loading = false;
             }
